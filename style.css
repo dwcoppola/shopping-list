@@ -1,0 +1,58 @@
+#table-container
+{
+    background-color: #FBEEC1;
+}
+body
+{
+    background-color: #BC986A;
+}
+h2, #input-controls, footer
+{
+    text-align: center;
+    color: #575436;
+}
+#add-item-button {
+    margin-left: 1em;
+    background-color: #8D8741;
+    color: #FBEEC1;
+    border-style: solid;
+    border-color: #DAAD86;
+}
+th 
+{
+    text-align: left;
+}
+table, footer
+{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+}
+.list-item-td
+{
+    width: 100px;
+}
+.checkbox-td
+{
+    width: 50px;
+}
+#stock-list
+{
+    list-style-type: none;
+}
+li
+{
+    width: 200px;
+}
+p 
+{
+    margin: .5em;
+}
+
+/*
+8D8741
+659DBD
+DAAD86
+BC986A
+FBEEC1
+*/
