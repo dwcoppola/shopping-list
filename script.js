@@ -133,32 +133,35 @@ function focusOnElement(elementID) {
     e.focus();
 }
 
-
-addElement(
-    'body', 'h2', 'Shopping List');
-addElement(
-    'body', 'div', '', 'id', 'input-controls');
-addElement('#input-controls', 'input', '', 
-    'placeholder', 'Name of New Item', 
-    'id', 'new-item-input', 
-    'onkeydown', 'listenForEnter(event)'
-    );
-{
-    var input = document.getElementById('new-item-input');
-    input.setAttribute('maxlength', '15');
+function buildOrRebuildPage() {
+    addElement(
+        'body', 'h2', 'Shopping List');
+    addElement(
+        'body', 'div', '', 'id', 'input-controls');
+    addElement('#input-controls', 'input', '', 
+        'placeholder', 'Name of New Item', 
+        'id', 'new-item-input', 
+        'onkeydown', 'listenForEnter(event)'
+        );
+    {
+        var input = document.getElementById('new-item-input');
+        input.setAttribute('maxlength', '15');
+    }
+    focusOnElement('new-item-input');
+    addElement('#input-controls', 'button', 'Add', 
+        'onclick', 'addToList()', 
+        'id', 'add-item-button'
+        );
+    /*
+    addElement('#input-controls', 'button', 'Sort', 
+        'onclick', 'sortList()', 
+        'id', 'sort-list-button'
+        );
+    */
+    addElement('body', 'div', '', 'id', 'table-container');
+    makeStockList(localStorageCheck());
+    addElement('body', 'footer');
+    addElement('footer', 'p', initialCaps(localStorage['history']), 'id', 'history-caption');
 }
-focusOnElement('new-item-input');
-addElement('#input-controls', 'button', 'Add', 
-    'onclick', 'addToList()', 
-    'id', 'add-item-button'
-    );
-/*
-addElement('#input-controls', 'button', 'Sort', 
-    'onclick', 'sortList()', 
-    'id', 'sort-list-button'
-    );
-*/
-addElement('body', 'div', '', 'id', 'table-container');
-makeStockList(localStorageCheck());
-addElement('body', 'footer');
-addElement('footer', 'p', initialCaps(localStorage['history']), 'id', 'history-caption');
+
+buildOrRebuildPage();
