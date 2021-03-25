@@ -1,7 +1,8 @@
 function pullListFromStorage() 
 {
     var stockArray = localStorage['shopping-list-list-dwcoppola'].split(",");
-    return stockArray.slice(0, stockArray.length - 1);
+    stockArray = stockArray.slice(0, stockArray.length - 1);
+    return stockArray.reverse();
 }
 
 function localStorageCheck() 
@@ -30,7 +31,7 @@ function initialCaps(str)
 
 function adjustHistoryCaption(text) 
 {
-    localStorage['shopping-list-history-dwcoppola'] = text.toLowerCase();
+    localStorage['shopping-list-history-dwcoppola'] = text;
     var caption = document.querySelector('#history-caption');
     caption.innerHTML = text;
 }
@@ -196,17 +197,20 @@ function buildPage()
     if (localStorage['shopping-list-user-decision-dwcoppola'] === '1') {
         addElement('.switch', 'input', '', 'type', 'checkbox', 'checked', '', 'onChange', 'toggleAutoSave()');
     } else {
-        addElement('.switch', 'input', '', 'type', 'checkbox', 'onChange', 'toggleAutoSave()');
+        addElement(
+            '.switch', 'input', '', 
+            'type', 'checkbox', 
+            'onChange', 'toggleAutoSave()'
+        );
     }
     addElement('.switch', 'span', '', 'class', 'slider round');
     addElement('.switch', 'p', 'AutoSave Off/On', 'id', 'toggle-auto-save-text');
+    addElement('body', 'div', '', 'id', 'heading-container');
+    addElement('#heading-container', 'h2', 'Shopping List');
+    addElement('body', 'div', '', 'id', 'input-controls');
     addElement(
-        'body', 'h2', 'Shopping List'
-    );
-    addElement(
-        'body', 'div', '', 'id', 'input-controls');
-    addElement('#input-controls', 'input', '', 
-        'placeholder', 'Name of New Item', 
+        '#input-controls', 'input', '', 
+        'placeholder', 'Add An Item', 
         'id', 'new-item-input', 
         'onkeydown', 'listenForEnter(event)'
     );
@@ -215,7 +219,8 @@ function buildPage()
         input.setAttribute('maxlength', '15');
     }
     focusOnElement('new-item-input');
-    addElement('#input-controls', 'button', 'Add', 
+    addElement(
+        '#input-controls', 'button', 'Add', 
         'onclick', 'addToList()', 
         'id', 'add-item-button'
     );

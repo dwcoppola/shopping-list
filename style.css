@@ -24,6 +24,14 @@ h2, #input-controls, #caption-container
     text-align: center;
     color: #575436;
 }
+#new-item-input
+{
+    width: 195px;
+}
+input
+{
+    font-size: 18px;
+}
 .delete-stock-button:hover, #add-item-button:hover
 {
     cursor: pointer;
@@ -45,6 +53,12 @@ table, #caption-container
     margin-left: auto;
     margin-right: auto;
     margin-top: 1em;
+    font-size: 18px;
+    color: #575436;
+}
+.delete-stock-button
+{
+  font-size: 14px;
 }
 .list-item-td
 {
