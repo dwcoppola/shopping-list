@@ -97,6 +97,7 @@ function addToList()
         buildTable(pullListFromStorage());
         var clearItem = document.getElementById('new-item-input')
         clearItem.value = '';
+        focusOnElement('new-item-input');
     }
 }
 
@@ -111,6 +112,7 @@ function removeFromStock(item)
     }
     adjustHistoryCaption(`Removed ${initialCaps(item)}`);
     buildTable(pullListFromStorage());
+    focusOnElement('new-item-input');
 }
 
 function addElement(parent, child, content, 
