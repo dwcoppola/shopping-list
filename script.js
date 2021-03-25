@@ -146,6 +146,10 @@ function focusOnElement(elementID) {
     e.focus();
 }
 
+function listenForAutoSave() {
+    
+}
+
 function listenForCheck(checkBoxID) {
     var checkbox = document.getElementById(`checkbox-${checkBoxID}`);
     var checkedItem = document.getElementById(`list-item-${checkBoxID}`).textContent.toLowerCase();
@@ -175,27 +179,20 @@ function userDecisionCheck() {
     }
 }
 
-function welcome() {
-    if (localStorage['shopping-list-user-decision-dwcoppola'] === '') {
-        confirmation = confirm(`Selecting 'OK' will allow the use of local storage and will automatically save your progress. If you don't want to use the auto save feature SELECT CANCEL and any storage used during your session will be deleted once you're finished.`);
-        if (confirmation === false) {
-            localStorage['shopping-list-user-decision-dwcoppola'] = '0';
-        } else {
-            localStorage['shopping-list-user-decision-dwcoppola'] = '1';
-        }
-    }
-}
-
 // The app
 
 function buildPage() 
 {
     localStorageCheck();
-    welcome();
     {
         var body = document.querySelector('body');
         body.setAttribute('onbeforeunload', 'userDecisionCheck()')
     }
+    addElement('body','div','','id','auto-save-container');
+    addElement('#auto-save-container', 'label', '', 'class', 'switch');
+    addElement('.switch', 'input', '', 'type', 'checkbox', 'checked', '');
+    addElement('.switch', 'span', '', 'class', 'slider round');
+    addElement('.switch', 'p', 'AutoSave On/Off', 'id', 'toggle-auto-save-text');
     addElement(
         'body', 'h2', 'Shopping List'
     );
