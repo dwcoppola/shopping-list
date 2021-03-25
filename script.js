@@ -1,3 +1,8 @@
+function pullListFromStorage() {
+    var stockArray = localStorage['list'].split(",");
+    return stockArray.slice(0, stockArray.length - 1);
+}
+
 function localStorageCheck() {
     if (localStorage['history'] === undefined) {
         localStorage['history'] = '';
@@ -6,10 +11,9 @@ function localStorageCheck() {
         localStorage['checked'] = '';
     } 
     if (localStorage['list'] === undefined) {
-        localStorage['list'] = "";
+        localStorage['list'] = '';
     } else {
-        var stockArray = localStorage['list'].split(",");
-        return stockArray.slice(0, stockArray.length - 1);
+        return pullListFromStorage();
     }
 }
 
@@ -26,7 +30,6 @@ function addToList() {
         localStorage['history'] = caption.toLowerCase();
         location.reload();  
     }
-
 }
 
 function removeFromStock(item) {
@@ -134,8 +137,10 @@ function focusOnElement(elementID) {
 }
 
 function buildOrRebuildPage() {
+    localStorageCheck();
     addElement(
         'body', 'h2', 'Shopping List');
+
     addElement(
         'body', 'div', '', 'id', 'input-controls');
     addElement('#input-controls', 'input', '', 
@@ -152,6 +157,8 @@ function buildOrRebuildPage() {
         'onclick', 'addToList()', 
         'id', 'add-item-button'
         );
+        addElement('body', 'div', '', 'id', 'caption-container');
+        addElement('#caption-container', 'p', initialCaps(localStorage['history']), 'id', 'history-caption');
     /*
     addElement('#input-controls', 'button', 'Sort', 
         'onclick', 'sortList()', 
@@ -159,9 +166,7 @@ function buildOrRebuildPage() {
         );
     */
     addElement('body', 'div', '', 'id', 'table-container');
-    makeStockList(localStorageCheck());
-    addElement('body', 'footer');
-    addElement('footer', 'p', initialCaps(localStorage['history']), 'id', 'history-caption');
+    makeStockList(pullListFromStorage());
 }
 
 buildOrRebuildPage();

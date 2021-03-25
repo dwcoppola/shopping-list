@@ -9,7 +9,7 @@ body
 {
     background-color: #BC986A;
 }
-h2, #input-controls, footer
+h2, #input-controls, #caption-container
 {
     text-align: center;
     color: #575436;
@@ -30,7 +30,7 @@ th
 {
     text-align: left;
 }
-table, footer
+table, #caption-container
 {
     margin-left: auto;
     margin-right: auto;
