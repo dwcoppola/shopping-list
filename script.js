@@ -33,7 +33,7 @@ function adjustHistoryCaption(text)
 {
     localStorage['shopping-list-history-dwcoppola'] = text;
     var caption = document.querySelector('#history-caption');
-    caption.innerHTML = text;
+    caption.innerHTML = "You " + text;
 }
 
 function removeAllChildNodes(parent) 
@@ -221,11 +221,11 @@ function buildPage()
         input.setAttribute('maxlength', '15');
     }
     focusOnElement('new-item-input');
-    addElement(
-        '#input-controls', 'button', 'Add', 
-        'onclick', 'addToList()', 
-        'id', 'add-item-button'
-    );
+//    addElement(
+//        '#input-controls', 'button', 'Add', 
+//        'onclick', 'addToList()', 
+//        'id', 'add-item-button'
+//    );
     addElement('body', 'div', '', 'id', 'caption-container');
     addElement(
         '#caption-container', 'p', initialCaps(localStorage['shopping-list-history-dwcoppola']), 
