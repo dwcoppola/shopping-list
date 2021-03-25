@@ -87,13 +87,14 @@ function buildTable(list)
 function addToList() 
 {
     var item = document.getElementById('new-item-input').value;
-    var item = item.replaceAll(",", " ").trim();
-    if (localStorage['shopping-list-list-dwcoppola'].split(',').includes(item.toLowerCase())) {
+    item = item.replaceAll(",", " ").trim();
+    item = item.toLowerCase();
+    if (localStorage['shopping-list-list-dwcoppola'].split(',').includes(item)) {
         alert("That's already in your list");
     } else {
-        localStorage['shopping-list-list-dwcoppola'] += item.toLowerCase() + ",";
-        localStorage['shopping-list-checked-dwcoppola'] += (item.toLowerCase() + "," + '0,');
-        adjustHistoryCaption(`Added ${initialCaps(item.toLowerCase())}`);
+        localStorage['shopping-list-list-dwcoppola'] += item + ",";
+        localStorage['shopping-list-checked-dwcoppola'] += (item + "," + '0,');
+        adjustHistoryCaption(`Added ${initialCaps(item)}`);
         buildTable(pullListFromStorage());
         var clearItem = document.getElementById('new-item-input')
         clearItem.value = '';
@@ -110,7 +111,7 @@ function removeFromStock(item)
     } else {
         localStorage['shopping-list-checked-dwcoppola'] = localStorage['shopping-list-checked-dwcoppola'].replace(deleteItem + '1,', '');
     }
-    adjustHistoryCaption(`Removed ${initialCaps(item.toLowerCase())}`);
+    adjustHistoryCaption(`Removed ${initialCaps(item)}`);
     buildTable(pullListFromStorage());
     focusOnElement('new-item-input');
 }
