@@ -1,6 +1,9 @@
 #table-container
 {
     background-color: #FBEEC1;
+    width: 344px;
+    margin-left: auto;
+    margin-right: auto;
 }
 body
 {
@@ -11,7 +14,12 @@ h2, #input-controls, footer
     text-align: center;
     color: #575436;
 }
-#add-item-button {
+.delete-stock-button:hover
+{
+    cursor: pointer;
+}
+button 
+{
     margin-left: 1em;
     background-color: #8D8741;
     color: #FBEEC1;

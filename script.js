@@ -1,63 +1,53 @@
-allLocations = [];
-allStock = [];
-
 function localStorageCheck() {
-    if (localStorage['allLocations'] === undefined) {
-        localStorage['allLocations'] = '';
+    if (localStorage['history'] === undefined) {
+        localStorage['history'] = '';
     }
-    if (localStorage['allChecked'] === undefined) {
-        localStorage['allChecked'] = '';
+    if (localStorage['checked'] === undefined) {
+        localStorage['checked'] = '';
     } 
-    if (localStorage['allStock'] === undefined) {
-        localStorage['allStock'] = "";
+    if (localStorage['list'] === undefined) {
+        localStorage['list'] = "";
     } else {
-        var stockArray = localStorage['allStock'].split(",");
-        allStock = stockArray.slice(0, stockArray.length - 1);
+        var stockArray = localStorage['list'].split(",");
+        return stockArray.slice(0, stockArray.length - 1);
     }
 }
 
-function addToStock() {
+function addToList() {
     var item = document.getElementById('new-item-input').value;
     var item = item.replaceAll(",", " ").trim();
-    if (allStock.includes(item.toLowerCase())) {
+    if (localStorage['list'].split(',').includes(item.toLowerCase())) {
         alert("That's already in your list");
         location.reload();
+    } else {
+        localStorage['list'] += item.toLowerCase() + ",";
+        localStorage['checked'] += (item.toLowerCase() + "," + '0,');
+        caption = `Added ${item.toLowerCase()}`;
+        localStorage['history'] = caption.toLowerCase();
+        location.reload();  
     }
-    else {
-        allStock.push(item.toLowerCase());
-        localStorage['allStock'] += item.toLowerCase() + ",";
-        localStorage['allChecked'] += (item.toLowerCase() + "," + '0;');
-        location.reload();
-    }
+
 }
 
 function removeFromStock(item) {
     deleteItem = item + ',';
-    localStorage['allStock'] = localStorage['allStock'].replace(deleteItem, '');
-    if (localStorage['allChecked'].includes(deleteItem + '0,')) {
-        localStorage['allChecked'] = localStorage['allChecked'].replace(deleteItem + '0,', '');
+    localStorage['list'] = localStorage['list'].replace(deleteItem, '');
+    if (localStorage['checked'].includes(deleteItem + '0,')) {
+        localStorage['checked'] = localStorage['checked'].replace(deleteItem + '0,', '');
     } else {
-        localStorage['allChecked'] = localStorage['allChecked'].replace(deleteItem + '1,', '');
+        localStorage['checked'] = localStorage['checked'].replace(deleteItem + '1,', '');
     }
+    caption = `Removed ${initialCaps(item)}`;
+    localStorage['history'] = caption.toLowerCase();
     location.reload();
-}
-
-function List(name) {
-    this.name = name;
-    this.items = [];
-    this.add = function(items) {
-        for (i in items) {
-            this.items.push(items[i]);
-        }
-    }
 }
 
 function addElement(
     parent, child, content, 
-        attribute1=null, attibuteValue1=null, 
-            attribute2=null, attributeValue2=null, 
-                attribute3=null, attributeValue3=null,) 
-                    {
+    attribute1=null, attibuteValue1=null, 
+    attribute2=null, attributeValue2=null, 
+    attribute3=null, attributeValue3=null,
+    ) {
     var parent = document.querySelector(parent);
     var child = document.createElement(child);
     parent.appendChild(child);
@@ -77,26 +67,39 @@ function initialCaps(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function makeStockList() {
+function makeStockList(list) {
     addElement('#table-container', 'table', '', 'id', 'stock-list');
     addElement('table', 'tr', '', 'id', 'top-row');
     addElement('#top-row', 'th');
     addElement('#top-row', 'th');
     addElement('#top-row', 'th');
-    
-    for (item in allStock) {
+    for (item in list) {
         addElement('table', 'tr', '', 'id', `row-${item}`);
-
-            addElement(`#row-${item}`, 'td', `${initialCaps(allStock[item])}`, 'id', `list-item-${item}`, 'class', 'list-item-td');
-            addElement(`#row-${item}`, 'td', '', 'id', `check-box-home-${item}`, 'class', 'checkbox-td');
-
-            addElement(`#check-box-home-${item}`, 'input', '', 'type', 'checkbox', 'onclick', `listenForCheck(${item})`, 'id', `checkbox-${item}`);
-                addElement(`#row-${item}`, 'td', '', 'id', `delete-button-home-${item}`, 
-                    'onclick', `removeFromStock("${allStock[item]}")`, 'class', 'delete-stock-button'
-                    );
-
+        addElement(
+            `#row-${item}`, 'td', `${initialCaps(list[item])}`, 
+            'id', `list-item-${item}`, 
+            'class', 'list-item-td'
+        );
+        addElement(
+            `#row-${item}`, 'td', '', 
+            'id', `check-box-home-${item}`, 
+            'class', 'checkbox-td'
+        );
+        addElement(
+            `#check-box-home-${item}`, 'input', '', 
+            'type', 'checkbox', 
+            'onclick', `listenForCheck(${item})`, 
+            'id', `checkbox-${item}`
+        );
+        var checkbox = document.getElementById(`checkbox-${item}`);
+        localStorage['checked'].includes(`${list[item].toLowerCase()},1`) ? checkbox.checked = true : checkbox.checked = false;
+        addElement(
+            `#row-${item}`, 'td', '', 
+            'class', 'delete-button', 
+            'onclick', `removeFromStock("${list[item]}")`, 
+            'class', 'delete-stock-button'
+        );
         var buttons = document.querySelectorAll('.delete-stock-button');
-    
         for (i in buttons) {
             buttons[i].innerHTML = "&#9949";
         };
@@ -107,16 +110,20 @@ function listenForCheck(checkBoxID) {
     checkbox = document.getElementById(`checkbox-${checkBoxID}`);
     checkedItem = document.getElementById(`list-item-${checkBoxID}`).textContent.toLowerCase();
     if (checkbox.checked === true) {
-        localStorage['allChecked'] = localStorage['allChecked'].replace(checkedItem + ',0', checkedItem + ',1');
+        localStorage['checked'] = localStorage['checked'].replace(checkedItem + ',0', checkedItem + ',1');
+        localStorage['history'] = `checked ${checkedItem}`;
+        location.reload();
     } else {
-        localStorage['allChecked'] = localStorage['allChecked'].replace(checkedItem + ',1', checkedItem + ',0');
+        localStorage['checked'] = localStorage['checked'].replace(checkedItem + ',1', checkedItem + ',0');
+        localStorage['history'] = `unchecked ${checkedItem}`;
+        location.reload();
     }
 }
 
 function listenForEnter(event) {
     var listen = event.which || event.keyCode;
     if (listen === 13) {
-        addToStock()
+        addToList();
     } else {
     };
 }
@@ -126,11 +133,11 @@ function focusOnElement(elementID) {
     e.focus();
 }
 
-localStorageCheck();
+
 addElement(
     'body', 'h2', 'Shopping List');
 addElement(
-    'body', 'div', '', 'id', 'input-controls')
+    'body', 'div', '', 'id', 'input-controls');
 addElement('#input-controls', 'input', '', 
     'placeholder', 'Name of New Item', 
     'id', 'new-item-input', 
@@ -142,10 +149,16 @@ addElement('#input-controls', 'input', '',
 }
 focusOnElement('new-item-input');
 addElement('#input-controls', 'button', 'Add', 
-    'onclick', 'addToStock()', 
+    'onclick', 'addToList()', 
     'id', 'add-item-button'
     );
+/*
+addElement('#input-controls', 'button', 'Sort', 
+    'onclick', 'sortList()', 
+    'id', 'sort-list-button'
+    );
+*/
 addElement('body', 'div', '', 'id', 'table-container');
-makeStockList();
+makeStockList(localStorageCheck());
 addElement('body', 'footer');
-addElement('footer', 'p', 'This is where actions go')
+addElement('footer', 'p', initialCaps(localStorage['history']), 'id', 'history-caption');
