@@ -177,12 +177,7 @@ function userDecisionCheck() {
 
 function welcome() {
     if (localStorage['shopping-list-user-decision-dwcoppola'] === '') {
-        confirmation = confirm(
-`Selecting 'OK' will allow the use of local storage.
-If you don't want to save your progress for later use, 
-please select 'CANCEL' or close this window and any 
-storage used during your session will be deleted once 
-you're finished.`);
+        confirmation = confirm(`Selecting 'OK' will allow the use of local storage and will automatically save your progress. If you don't want to use the auto save feature SELECT CANCEL and any storage used during your session will be deleted once you're finished.`);
         if (confirmation === false) {
             localStorage['shopping-list-user-decision-dwcoppola'] = '0';
         } else {
