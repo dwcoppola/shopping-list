@@ -16,7 +16,7 @@ function localStorageCheck()
         localStorage['shopping-list-list-dwcoppola'] = '';
     } 
     if (localStorage['shopping-list-user-decision-dwcoppola'] === undefined) {
-        localStorage['shopping-list-user-decision-dwcoppola'] = '';
+        localStorage['shopping-list-user-decision-dwcoppola'] = '1';
     }
     else {
         return pullListFromStorage();
@@ -146,8 +146,12 @@ function focusOnElement(elementID) {
     e.focus();
 }
 
-function listenForAutoSave() {
-    
+function toggleAutoSave() {
+    if (localStorage['shopping-list-user-decision-dwcoppola'] === '1') {
+        localStorage['shopping-list-user-decision-dwcoppola'] = '0';
+    } else {
+        localStorage['shopping-list-user-decision-dwcoppola'] = '1';
+    }
 }
 
 function listenForCheck(checkBoxID) {
@@ -175,7 +179,6 @@ function userDecisionCheck() {
         localStorage.removeItem('shopping-list-history-dwcoppola');
         localStorage.removeItem('shopping-list-checked-dwcoppola');
         localStorage.removeItem('shopping-list-list-dwcoppola');
-        localStorage.removeItem('shopping-list-user-decision-dwcoppola');
     }
 }
 
@@ -190,9 +193,13 @@ function buildPage()
     }
     addElement('body','div','','id','auto-save-container');
     addElement('#auto-save-container', 'label', '', 'class', 'switch');
-    addElement('.switch', 'input', '', 'type', 'checkbox', 'checked', '');
+    if (localStorage['shopping-list-user-decision-dwcoppola'] === '1') {
+        addElement('.switch', 'input', '', 'type', 'checkbox', 'checked', '', 'onChange', 'toggleAutoSave()');
+    } else {
+        addElement('.switch', 'input', '', 'type', 'checkbox', 'onChange', 'toggleAutoSave()');
+    }
     addElement('.switch', 'span', '', 'class', 'slider round');
-    addElement('.switch', 'p', 'AutoSave On/Off', 'id', 'toggle-auto-save-text');
+    addElement('.switch', 'p', 'AutoSave Off/On', 'id', 'toggle-auto-save-text');
     addElement(
         'body', 'h2', 'Shopping List'
     );
