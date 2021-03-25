@@ -1,13 +1,7 @@
-#table-container
-{
-    background-color: #FBEEC1;
-    width: 320px;
-    margin-left: auto;
-    margin-right: auto;
-}
 body
 {
     background-color: #BC986A;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 #auto-save-container
 {
@@ -48,6 +42,13 @@ th
 {
     text-align: left;
 }
+#table-container
+{
+    background-color: #FBEEC1;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
 table, #caption-container
 {
     margin-left: auto;
@@ -55,6 +56,11 @@ table, #caption-container
     margin-top: 1em;
     font-size: 18px;
     color: #575436;
+}
+table, tr
+{
+    border: 1px solid #575436;
+    border-collapse: collapse;
 }
 .delete-stock-button
 {

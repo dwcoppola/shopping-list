@@ -47,10 +47,10 @@ function buildTable(list)
 {
     table = document.querySelector('table');
     removeAllChildNodes(table);
-    addElement('table', 'tr', '', 'id', 'top-row');
-    addElement('#top-row', 'th');
-    addElement('#top-row', 'th');
-    addElement('#top-row', 'th');
+//    addElement('table', 'tr', '', 'id', 'top-row');
+//    addElement('#top-row', 'th');
+//    addElement('#top-row', 'th');
+//    addElement('#top-row', 'th');
     for (item in list) {
         addElement('table', 'tr', '', 'id', `row-${item}`);
         addElement(
@@ -150,8 +150,10 @@ function focusOnElement(elementID) {
 function toggleAutoSave() {
     if (localStorage['shopping-list-user-decision-dwcoppola'] === '1') {
         localStorage['shopping-list-user-decision-dwcoppola'] = '0';
+        adjustHistoryCaption(`Disabled AutoSave`)
     } else {
         localStorage['shopping-list-user-decision-dwcoppola'] = '1';
+        adjustHistoryCaption(`Enabled AutoSave`)
     }
 }
 
@@ -204,7 +206,7 @@ function buildPage()
         );
     }
     addElement('.switch', 'span', '', 'class', 'slider round');
-    addElement('.switch', 'p', 'AutoSave Off/On', 'id', 'toggle-auto-save-text');
+    addElement('#auto-save-container', 'p', 'Toggle AutoSave', 'id', 'toggle-auto-save-text');
     addElement('body', 'div', '', 'id', 'heading-container');
     addElement('#heading-container', 'h2', 'Shopping List');
     addElement('body', 'div', '', 'id', 'input-controls');
