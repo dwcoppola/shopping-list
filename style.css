@@ -14,11 +14,11 @@ h2, #input-controls, #caption-container
     text-align: center;
     color: #575436;
 }
-.delete-stock-button:hover
+.delete-stock-button:hover, #add-item-button:hover
 {
     cursor: pointer;
 }
-button 
+button
 {
     margin-left: 1em;
     background-color: #8D8741;
@@ -38,7 +38,7 @@ table, #caption-container
 }
 .list-item-td
 {
-    width: 100px;
+    width: 120px;
 }
 .checkbox-td
 {

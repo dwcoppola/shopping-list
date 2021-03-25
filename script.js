@@ -93,7 +93,7 @@ function addToList()
     } else {
         localStorage['shopping-list-list-dwcoppola'] += item.toLowerCase() + ",";
         localStorage['shopping-list-checked-dwcoppola'] += (item.toLowerCase() + "," + '0,');
-        adjustHistoryCaption(`Added ${initialCaps(item)}`);
+        adjustHistoryCaption(`Added ${initialCaps(item.toLowerCase())}`);
         buildTable(pullListFromStorage());
         var clearItem = document.getElementById('new-item-input')
         clearItem.value = '';
@@ -110,7 +110,7 @@ function removeFromStock(item)
     } else {
         localStorage['shopping-list-checked-dwcoppola'] = localStorage['shopping-list-checked-dwcoppola'].replace(deleteItem + '1,', '');
     }
-    adjustHistoryCaption(`Removed ${initialCaps(item)}`);
+    adjustHistoryCaption(`Removed ${initialCaps(item.toLowerCase())}`);
     buildTable(pullListFromStorage());
     focusOnElement('new-item-input');
 }
