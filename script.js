@@ -46,6 +46,10 @@ function buildTable(list)
 {
     table = document.querySelector('table');
     removeAllChildNodes(table);
+    addElement('table', 'tr', '', 'id', 'top-row');
+    addElement('#top-row', 'th');
+    addElement('#top-row', 'th');
+    addElement('#top-row', 'th');
     for (item in list) {
         addElement('table', 'tr', '', 'id', `row-${item}`);
         addElement(
@@ -129,12 +133,8 @@ function addElement(parent, child, content,
         };
 }
 
-function makeStockList(list) {
+function makeShoppingList(list) {
     addElement('#table-container', 'table', '', 'id', 'stock-list');
-    addElement('table', 'tr', '', 'id', 'top-row');
-    addElement('#top-row', 'th');
-    addElement('#top-row', 'th');
-    addElement('#top-row', 'th');
     buildTable(list);
 }
 
@@ -148,14 +148,10 @@ function listenForCheck(checkBoxID) {
     var checkedItem = document.getElementById(`list-item-${checkBoxID}`).textContent.toLowerCase();
     if (checkbox.checked === true) {
         localStorage['shopping-list-checked-dwcoppola'] = localStorage['shopping-list-checked-dwcoppola'].replace(checkedItem + ',0', checkedItem + ',1');
-        localStorage['shopping-list-history-dwcoppola'] = `checked ${checkedItem}`;
-        var caption = document.querySelector('#history-caption');
-        caption.innerHTML = initialCaps(localStorage['shopping-list-history-dwcoppola']);
+        adjustHistoryCaption(`Checked ${initialCaps(checkedItem)}`)
     } else {
         localStorage['shopping-list-checked-dwcoppola'] = localStorage['shopping-list-checked-dwcoppola'].replace(checkedItem + ',1', checkedItem + ',0');
-        localStorage['shopping-list-history-dwcoppola'] = `unchecked ${checkedItem}`;
-        var caption = document.querySelector('#history-caption');
-        caption.innerHTML = initialCaps(localStorage['shopping-list-history-dwcoppola']);
+        adjustHistoryCaption(`Unchecked ${initialCaps(checkedItem)}`)
     }
 }
 
@@ -227,7 +223,7 @@ function buildPage()
         'id', 'history-caption'
     );
     addElement('body', 'div', '', 'id', 'table-container');
-    makeStockList(pullListFromStorage());
+    makeShoppingList(pullListFromStorage());
 }
 
 // Run the app
