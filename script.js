@@ -264,8 +264,12 @@ function buildPage()
     }
     focusOnElement('new-item-input');
     addElement('body', 'div', '', 'id', 'caption-container');
+    {
+        var message = "You " + initialCaps(localStorage['shopping-list-history-dwcoppola']);
+        message === "You " ? message = "" : message = "You " + initialCaps(localStorage['shopping-list-history-dwcoppola']);
+    }
     addElement(
-        '#caption-container', 'p', "You " + initialCaps(localStorage['shopping-list-history-dwcoppola']), 
+        '#caption-container', 'p', `${message}`, 
         'id', 'history-caption'
     );
     addElement('body', 'div', '', 'id', 'table-container');
