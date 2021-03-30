@@ -136,7 +136,7 @@ function removeFromStock(item)
     }
     adjustHistoryCaption(`Removed ${initialCaps(item)}`);
     buildTable(pullListFromStorage());
-    focusOnElement('new-item-input');
+    //focusOnElement('new-item-input');
 }
 
 function addElement(parent, child, content, 
