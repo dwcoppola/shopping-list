@@ -45,14 +45,36 @@ function removeAllChildNodes(parent)
 
 function buildTable(list) 
 {
-    table = document.querySelector('table');
+    var table = document.querySelector('table');
     removeAllChildNodes(table);
-//    addElement('table', 'tr', '', 'id', 'top-row');
-//    addElement('#top-row', 'th');
-//    addElement('#top-row', 'th');
-//    addElement('#top-row', 'th');
-    for (item in list) {
-        addElement('table', 'tr', '', 'id', `row-${item}`);
+    if (list.length !== 0) {
+        addElement(
+            `table`, 'tr', '', 
+            'id', 'top-row', 
+        );
+        addElement(
+            '#top-row', 'th', 'Item', 
+            'style', 'padding-left: 20px;'
+        );
+        addElement(
+            '#top-row', 'th', '', 
+            'id', 'check-th', 
+            'style', 'text-align: center;'
+        );
+        {
+            var checkmark = document.querySelector('#check-th');
+            checkmark.innerHTML = '&#10003'
+        }
+        addElement(
+            '#top-row', 'th', 'Del.', 
+            'style', 'text-align: center;'
+        );
+    }
+    for (item in list) {        
+        addElement(
+            'table', 'tr', '', 
+            'id', `row-${item}`
+        );
         addElement(
             `#row-${item}`, 'td', `${initialCaps(list[item])}`, 
             'id', `list-item-${item}`, 
@@ -88,7 +110,7 @@ function buildTable(list)
 function addToList() 
 {
     var item = document.getElementById('new-item-input').value;
-    item = item.replaceAll(",", " ").trim();
+    var item = item.replaceAll(",", " ").trim();
     item = item.toLowerCase();
     if (localStorage['shopping-list-list-dwcoppola'].split(',').includes(item)) {
         alert("That's already in your list");
@@ -126,12 +148,12 @@ function addElement(parent, child, content,
         var child = document.createElement(child);
         parent.appendChild(child);
         child.textContent = content;
-        if (attribute1 !== null && attibuteValue1 !== null) {
-            child.setAttribute(attribute1, attibuteValue1);
-        };
-        if (attribute2 !== null && attributeValue2 !== null) {
-            child.setAttribute(attribute2, attributeValue2);
-        };
+                if (attribute1 !== null && attibuteValue1 !== null) {
+                    child.setAttribute(attribute1, attibuteValue1);
+                };
+            if (attribute2 !== null && attributeValue2 !== null) {
+                child.setAttribute(attribute2, attributeValue2);
+            };
         if (attribute3 !== null && attributeValue3 !== null) {
             child.setAttribute(attribute3, attributeValue3);
         };
@@ -197,7 +219,12 @@ function buildPage()
     addElement('body','div','','id','auto-save-container');
     addElement('#auto-save-container', 'label', '', 'class', 'switch');
     if (localStorage['shopping-list-user-decision-dwcoppola'] === '1') {
-        addElement('.switch', 'input', '', 'type', 'checkbox', 'checked', '', 'onChange', 'toggleAutoSave()');
+        addElement(
+            '.switch', 'input', '', 
+            'type', 'checkbox', 
+            'checked', '', 
+            'onChange', 'toggleAutoSave()'
+        );
     } else {
         addElement(
             '.switch', 'input', '', 
@@ -205,11 +232,26 @@ function buildPage()
             'onChange', 'toggleAutoSave()'
         );
     }
-    addElement('.switch', 'span', '', 'class', 'slider round');
-    addElement('#auto-save-container', 'p', 'Toggle AutoSave', 'id', 'toggle-auto-save-text');
-    addElement('body', 'div', '', 'id', 'heading-container');
-    addElement('#heading-container', 'h2', 'Shopping List');
-    addElement('body', 'div', '', 'id', 'input-controls');
+    addElement(
+        '.switch', 'span', '', 
+        'class', 'slider round'
+    );
+    addElement(
+        '#auto-save-container', 'p', 
+        'Toggle AutoSave', 'id', 
+        'toggle-auto-save-text'
+    );
+    addElement(
+        'body', 'div', '', 
+        'id', 'heading-container'
+    );
+    addElement(
+        '#heading-container', 'h2', 'Shopping List'
+    );
+    addElement(
+        'body', 'div', '', 
+        'id', 'input-controls'
+    );
     addElement(
         '#input-controls', 'input', '', 
         'placeholder', 'Add An Item', 
@@ -221,14 +263,9 @@ function buildPage()
         input.setAttribute('maxlength', '15');
     }
     focusOnElement('new-item-input');
-//    addElement(
-//        '#input-controls', 'button', 'Add', 
-//        'onclick', 'addToList()', 
-//        'id', 'add-item-button'
-//    );
     addElement('body', 'div', '', 'id', 'caption-container');
     addElement(
-        '#caption-container', 'p', initialCaps(localStorage['shopping-list-history-dwcoppola']), 
+        '#caption-container', 'p', "You " + initialCaps(localStorage['shopping-list-history-dwcoppola']), 
         'id', 'history-caption'
     );
     addElement('body', 'div', '', 'id', 'table-container');

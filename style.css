@@ -1,6 +1,6 @@
 body
 {
-    background-color: #BC986A;
+    background-color: #c2b099;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 #auto-save-container
@@ -8,6 +8,9 @@ body
     display: flex;
     flex-direction: row;
     color: #575436;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #toggle-auto-save-text
 {
